@@ -1,5 +1,5 @@
 # python base image in the container from Docker Hub
-FROM python:3.10.12-buster
+FROM python:3.8.12-buster
 
 # copy files to the /app folder in the container
 COPY app.py /app/app.py
