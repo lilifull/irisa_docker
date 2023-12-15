@@ -15,6 +15,7 @@ numpy = "==1.23.2"
 scikit-learn = "*"
 pytest = "*"
 scipy = "==1.9.1"
+update = "*"
 
 [dev-packages]
 
