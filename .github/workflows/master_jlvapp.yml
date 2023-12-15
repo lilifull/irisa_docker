@@ -33,6 +33,9 @@ jobs:
         tags: irisappjlvcontaineur.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_ad189677349e48bc85a85a22253435ca }}/jlvapp:${{ github.sha }}
         file: ./Dockerfile
 
+    - name: install pytest
+      run: pip install pytest
+
     - name: Test with pytest
       run: pytest
 
