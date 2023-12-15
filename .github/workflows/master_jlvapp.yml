@@ -1,0 +1,51 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - jlvapp
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: https://irisappjlvcontaineur.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_ad189677349e48bc85a85a22253435ca }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_f2f06fcb07184901997040be98c22e70 }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: irisappjlvcontaineur.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_ad189677349e48bc85a85a22253435ca }}/jlvapp:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'jlvapp'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_e5ca767ee3e04055a398dc7bf07fe5a8 }}
+        images: 'irisappjlvcontaineur.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_ad189677349e48bc85a85a22253435ca }}/jlvapp:${{ github.sha }}'
