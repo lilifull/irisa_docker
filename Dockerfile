@@ -7,7 +7,6 @@ COPY Pipfile /app/Pipfile
 COPY Pipfile.lock /app/Pipfile.lock
 COPY Model.py /app/Model.py
 COPY iris_model.pkl /app/iris_model.pkl
-COPY tests /app/tests
 
 
 # set the working directory in the container to be /app
