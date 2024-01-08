@@ -7,7 +7,7 @@ model = IrisModel('iris_model.pkl')
 
 @app.get("/")
 def read_root():
-    return {"Bienvenu dans l'irisappjlv :)"}
+    return {"C'est oki :)"}
 
 @app.post('/predict')
 def predict_species(iris: IrisSpecies):
