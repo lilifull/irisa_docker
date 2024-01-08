@@ -34,7 +34,9 @@ jobs:
         file: ./Dockerfile
 
     - name: Run pytest tests
-      run: pytest
+      run:
+        pip install pytest
+        pytest
 
   deploy:
     runs-on: ubuntu-latest

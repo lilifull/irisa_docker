@@ -9,7 +9,7 @@ model = IrisModel('iris_model.pkl')
 def read_root():
     return {"C'est oki :)"}
 
-@app.get('/predict')
+@app.post('/predict')
 def predict_species(iris: IrisSpecies):
     data = iris.dict()
     prediction, probability = model.predict_species(
